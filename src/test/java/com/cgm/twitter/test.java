@@ -1,5 +1,5 @@
 package com.cgm.twitter;
 
-public class test {
+public class Test {
 
 }

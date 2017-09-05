@@ -133,22 +133,17 @@ public class Builder {
 		return tweetClone;
 	}
 
-	// Problem
 	public static List<String> searchUserTweets(String username, String search) {
 
 		username = getUsername();
-		List<String> Tweet = new ArrayList<String>();
-		Tweet.add("tweet 1");
-		Tweet.add("tweet 2");
+		Tweet tweet = new Tweet();
+		tweet.setTweet("The cat is on the table");
 		List<String> tweetClone = new ArrayList<String>();
-		List<String> userClone = new ArrayList<String>();
-		for (String tweetSearch : Tweet) {
-			if (tweetSearch.equals(search)) {
-				tweetClone.add(tweetSearch);
-				userClone.add(username);
-			}
+		if (tweet.getTweet().contains(search)) {
+			tweetClone.add(search);
 		}
 		return tweetClone;
+
 	}
 
 	public static String getUsername() {
@@ -195,7 +190,7 @@ public class Builder {
 
 		return listUsers();
 	}
-	
+
 	public static Tweet anTweetWithId() {
 		Tweet tweet = new Tweet();
 		tweet.setId(1);
@@ -203,40 +198,62 @@ public class Builder {
 		tweet.setUser_username("user 1");
 		return tweet;
 	}
-	
-	public static List<Tweet> multipleTweets(){
-		List<Tweet> tweets = new ArrayList<Tweet>();
-		tweets.add(anTweet("user1","tweet user1"));
-		tweets.add(anTweet("user2","tweet user2"));
-		tweets.add(anTweet("user1","tweet user1 second"));
-		tweets.add(anTweet("user3","tweet user3"));
-		return tweets;
+
+	public static List<Tweet> multipleTweets() {
+		List<Tweet> tweetss = new ArrayList<Tweet>();
+		tweetss.add(anTweet("user1", "tweet user1"));
+		tweetss.add(anTweet("user2", "tweet user2"));
+		tweetss.add(anTweet("user1", "tweet user1 second"));
+		tweetss.add(anTweet("user3", "tweet user3"));
+		tweetByUser.put("user1", "tweet user1 map");
+		tweetByUser.put("user2", "tweet user2 map");
+		return tweetss;
 	}
 
-	public static List<Follow> listFollowing() {	
-	
-		Map<String, List<Follow>> followByUser = new HashMap<String, List<Follow>>();    
+	public static Map<String, List<Tweet>> tweetByUsers = new HashMap<String, List<Tweet>>();
+
+	public static Map<String, String> tweetByUser = new HashMap<String, String>();
+
+	public static Map<String, List<Follow>> followByUser = new HashMap<String, List<Follow>>();
+
+	public static List<Follow> listFollowing() {
 		List<Follow> following = new ArrayList<Follow>();
-		following.add(new Follow("user1","user2"));
-		following.add(new Follow("user1","user3"));
-		following.add(new Follow("user1","user4"));
+		following.add(new Follow("user1", "user2"));
+		following.add(new Follow("user1", "user3"));
+		following.add(new Follow("user1", "user4"));
 		followByUser.put("user1", following);
 		return following;
 
 	}
 
 	public static List<Follow> listFollowers() {
-		Map<String, List<Follow>> followByUser = new HashMap<String, List<Follow>>();    
+
 		List<Follow> following = new ArrayList<Follow>();
-		following.add(new Follow("user2","user1"));
-		following.add(new Follow("user3","user1"));
-		following.add(new Follow("user4","user1"));
-		following.add(new Follow("user5","user1"));
+		following.add(new Follow("user2", "user1"));
+		following.add(new Follow("user3", "user1"));
+		following.add(new Follow("user4", "user1"));
+		following.add(new Follow("user5", "user1"));
 		followByUser.put("user2", following);
 		followByUser.put("user3", following);
 		followByUser.put("user4", following);
 		followByUser.put("user5", following);
 		return following;
 
+	}
+
+	public static ArrayList<Tweet> tweet;
+
+	public static ArrayList<Tweet> getMessages() {
+		return tweet;
+	}
+
+	public static ArrayList<Tweet> tweets;
+
+	public static void addTweet(String tweet) {
+		Tweet newTweet = new Tweet();
+		newTweet.setTweet(tweet);
+		newTweet.setUser_username(getUsername());
+		tweets.add(newTweet);
+		tweetByUser.put(getUsername(), tweet);
 	}
 }

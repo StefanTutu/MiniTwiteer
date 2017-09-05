@@ -18,7 +18,7 @@
 			</div>
 		</c:if>
 	</div>
-	<s:form method="POST" commandName="account" acction="login.html">
+	<s:form method="POST" commandName="account" acction="login">
 		<fieldset>
 			<legend>Login</legend>
 			${error} <br>
@@ -29,7 +29,7 @@
 				</tr>
 				<tr>
 					<td>Password</td>
-					<td><s:input path="password" /></td>
+					<td><s:input type="password" path="password" /></td>
 				</tr>
 				<tr>
 					<td>Remember me?</td>

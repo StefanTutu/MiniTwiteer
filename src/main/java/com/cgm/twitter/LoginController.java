@@ -54,7 +54,7 @@ public class LoginController {
 	public String login(@ModelAttribute(value = "account") Account account, ModelMap modelMap, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 		AccountModel accModel = new AccountModel();
-		//modelMap.put("account", new Account());
+		// modelMap.put("account", new Account());
 		if (accModel.login(account.getUsername(), account.getPassword())) {
 			session.setAttribute("username", account.getUsername());
 			if (request.getParameter("remember") != null) {

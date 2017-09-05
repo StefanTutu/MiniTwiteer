@@ -39,7 +39,7 @@
 					<b>${tweetsList.user_username}:</b> ${tweetsList.tweet}
 			</div>
 		</c:forEach>
-		
+
 
 		<script type="text/javascript">
     $('#search_form').submit(function (e) {
