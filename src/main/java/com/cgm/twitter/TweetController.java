@@ -62,25 +62,15 @@ public class TweetController {
 		return model;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value = "/addTweet", method = RequestMethod.POST)
-	public ModelAndView createTweet(HttpServletRequest req, @ModelAttribute("message") String message)
-			throws Exception {
-		Map model = new HashMap();
-		// Builder.addTweet(message);
-		model.put("tweetByUser", Builder.tweetByUser);
-		return new ModelAndView("tweets/newTweetPage", model);
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value = "/addTweet", method = RequestMethod.GET)
-	public ModelAndView getTweet(HttpServletRequest request, @ModelAttribute("message") String message)
-			throws Exception {
-		Map model = new HashMap();
-		// message="text1123123";
-		// Builder.addTweet(message);
-		model.put("tweetByUser", Builder.tweetByUser);
-		return new ModelAndView("tweet/newTweetPage", model);
-	}
+//	@SuppressWarnings({ "unchecked", "rawtypes" })
+//	@RequestMapping(value = "/addTweet", method = RequestMethod.POST)
+//	public ModelAndView createTweet(HttpServletRequest req, @ModelAttribute("message") String message)
+//			throws Exception {
+//		Map model = new HashMap();
+//		// Builder.addTweet(message);
+//		model.put("tweetByUser", Builder.tweetByUser);
+//		return new ModelAndView("tweets/newTweetPage", model);
+//	}
+	
 
 }

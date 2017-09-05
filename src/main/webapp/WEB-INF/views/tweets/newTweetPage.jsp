@@ -9,58 +9,74 @@
     function functionTweet(){
     	var content = document.getElementById("tweet").value;
     	 var user = "<%=session.getAttribute("username")%>";
-    	 var data = {"user":  user, "tweet" :  content};
-    	 $.ajax({
-    	  url: "http://localhost:8080/twitter/addTweet",
-    	  type:"post",
-    	         dataType : "json",
-    	         async : true,
-    	         data: JSON.stringify(data),
-    	         contentType: "application/json; charset=utf-8",
-    	  success: function(data) 
-    	   {
-    	   location.reload();
+		var Data = {
+			"id" : 1,
+			"tweet" : content,
+			"user_username" : user
+		};
 
-    	   },
-    	   failure: function(data){
-    	   }
-    	  }); 
-    }
-  </script>
+		$.ajax({
+			type : "PUT",
+			url : "http://localhost:8080/twitter/mesaj/message",
+			data : JSON.stringify(Data),
+			processData : true,
+			cache : false,
+			async : true,
+			contentType : "application/json; charset=utf-8",
+			dataType : "json",
+			success : function(data) {
+				console.log(data);
+				location.reload();
+			},
+			failure : function(errMsg) {
+				alert(errMsg);
+			}
+		});
+	};
+</script>
+<script type="text/javascript">
+  
+ $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/twitter/mesaj/message",
+        
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){
+         $("#newMessage").append("<p>" + data.tweet + "</p>");
+         console.log(data);
+         },
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+    });
+ 
+
+</script>
 </head>
 <body style="margin: 0px;">
 	<jsp:include page="../_menu.jsp" />
-	<form:form method="POST" commandName="tweets" acction="tweetsPage">
-		<div style="margin-left: 30px; margin-top: 30px;">
-			<h1 style="color: grey;">Compose New Tweet</h1>
-			<br />
-			<table>
-				<tr>
-					<td><b>New Tweet:</b></td>
-					<td><textarea id="tweet" name="tweet" maxlength="140" rows="3"
-							cols="50" /></textarea></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><span style="font-size: 10pt; color: grey;">*
-							Maximum 140 characters</span></td>
-				</tr>
-				<tr>
-					<td><br />
-					<input type="button" value="Tweet" style="margin-left: 10px;"
-						onClick="functionTweet()"></td>
-				</tr>
-			</table>
-		</div>
+	<div style="margin-left: 30px; margin-top: 30px;">
+		<h1 style="color: grey;">Compose New Tweet</h1>
+		<br />
+		<table>
+			<tr>
+				<td><b>New Tweet:</b></td>
+				<td><textarea id="tweet" name="tweet" maxlength="140" rows="3"
+						cols="50" /></textarea></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><span style="font-size: 10pt; color: grey;">*
+						Maximum 140 characters</span></td>
+			</tr>
+			<tr>
+				<td><br /> <input type="button" value="Tweet"
+					style="margin-left: 10px;" onClick="functionTweet()"></td>
+			</tr>
+		</table>
+	</div>
 
-		<c:forEach var="tweetsList" items="${tweetByUser}">
-			<div class="list_items">
-				<p>
-					<b>${tweetsList.user_username}:</b> ${tweetsList.tweet}
-			</div>
-		</c:forEach>
-
-
-	</form:form>
+	<div id="newMessage"></div>
 </body>
 </html>

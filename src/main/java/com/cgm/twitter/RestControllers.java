@@ -22,9 +22,11 @@ import com.cgm.builder.ServiceResponse;
 import com.cgm.entities.Account;
 import com.cgm.entities.Tweet;
 
-@SuppressWarnings("unused")
+
 @RestController
+@RequestMapping("mesaj")
 public class RestControllers {
+	/*
 
 	public final static Logger logger = (Logger) LoggerFactory.getLogger(RestControllers.class);
 
@@ -65,5 +67,24 @@ public class RestControllers {
 		return new ModelAndView("tweets/tweetsPage", model);
 
 	}
+	*/
+	
+	@RequestMapping(value = "/message", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
+	  public @ResponseBody Tweet tweet(@RequestBody Tweet tweet, HttpServletRequest request) {
+		System.out.println("ook");
+	   Builder.tweetByUsers.get(request.getSession().getAttribute("username").toString()).add(tweet);
+	   System.out.println(Builder.tweetByUsers.get(request.getSession().getAttribute("username").toString()).get(0).getTweet());
+		
+	   return tweet;
+	  }
+	
+	@RequestMapping(value = "/message", method = RequestMethod.GET)
+	  public @ResponseBody ModelAndView getTweet(HttpServletRequest request) {
+	   ModelAndView model = new ModelAndView("/newTweetPage");
+	   model.addObject("messageList", Builder.tweetByUsers.get(request.getSession().getAttribute("username").toString()));
+	   return model;
+	  }
+	
+
 
 }

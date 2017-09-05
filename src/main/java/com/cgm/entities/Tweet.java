@@ -1,6 +1,9 @@
 package com.cgm.entities;
 
-public class Tweet {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Tweet implements Serializable{
 	private int id;
 	private String tweet;
 	private String user_username;
@@ -8,7 +11,8 @@ public class Tweet {
 	public Tweet() {
 	}
 
-	public Tweet(String tweet, String user_username) {
+	public Tweet(int id,String tweet, String user_username) {
+		this.id = id;
 		this.tweet = tweet;
 		this.user_username = user_username;
 	}

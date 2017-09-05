@@ -211,6 +211,8 @@ public class Builder {
 	}
 
 	public static Map<String, List<Tweet>> tweetByUsers = new HashMap<String, List<Tweet>>();
+	
+	
 
 	public static Map<String, String> tweetByUser = new HashMap<String, String>();
 
@@ -241,6 +243,12 @@ public class Builder {
 
 	}
 
+	static {
+		tweetByUsers.put("user1", new ArrayList<Tweet>());
+		tweetByUsers.put("user2", new ArrayList<Tweet>());
+		tweetByUsers.put("user3", new ArrayList<Tweet>());
+	}
+	
 	public static ArrayList<Tweet> tweet;
 
 	public static ArrayList<Tweet> getMessages() {
