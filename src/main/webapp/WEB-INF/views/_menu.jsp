@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div style="background-color: lightgrey; height: 7%;">
+<div style="background-color: lightgrey; height: 9%;">
 	<h2 style="display: inline-block; margin-left: 30px;">
 		<c:choose>
 			<c:when test="${sessionScope.username != null}">

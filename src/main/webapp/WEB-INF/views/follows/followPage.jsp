@@ -19,21 +19,24 @@
 
     <br/>
 
-    <c:forEach var="user" items="${userStatusMap}" varStatus="status">
+	
+    <c:forEach var="user" items="${listUsers}">
+    	<c:forEach var="userStatus" items="${user.value}">
       <p>
         <c:choose>
-          <c:when test="${user.status == false}">
-            <b>User: </b>${user.username}
-            <input type="button" value="Follow" style="margin-left: 10px;" onClick="follow('${user.username}')">
+          <c:when test="${userStatus.status == false}">
+            <b>User: </b>${userStatus.username}
+            <input type="button" value="Follow" style="margin-left: 10px;" onClick="follow('${userStatus.username}')">
           </c:when>
 
           <c:otherwise>
-            <b>User: </b>${user.username}
-            <input type="button" value="Unfollow" style="margin-left: 10px;" onClick="unfollow('${user.username}')">
+            <b>User: </b>${userStatus.username}
+            <input type="button" value="Unfollow" style="margin-left: 10px;" onClick="unfollow('${userStatus.username}')">
           </c:otherwise>
         </c:choose>
         <br/>
       </p>
+      </c:forEach>
     </c:forEach>
   </div>
 

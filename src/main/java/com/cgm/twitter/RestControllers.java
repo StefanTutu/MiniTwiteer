@@ -21,8 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cgm.builder.Builder;
 import com.cgm.builder.ServiceResponse;
 import com.cgm.entities.Account;
+import com.cgm.entities.Follow;
 import com.cgm.entities.Tweet;
 
+@SuppressWarnings("unused")
 @RestController
 public class RestControllers {
 	/*
@@ -51,7 +53,7 @@ public class RestControllers {
 	 * ") service with token: " + token + " !"); return new ServiceResponse(); }
 	 */
 
-	@RequestMapping(value = "/message", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = "/mesaj/message", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
 	public @ResponseBody Tweet tweet(@RequestBody Tweet tweet, HttpServletRequest request) {
 		Builder.tweetByUsers.get(request.getSession().getAttribute("username").toString()).add(tweet);
 		System.out.println(
@@ -59,18 +61,19 @@ public class RestControllers {
 		return tweet;
 	}
 	
-    @RequestMapping(value = "/tweets", method = RequestMethod.GET, produces = {"application/json","application/xml"})
+    @RequestMapping(value = "/tweets", method = RequestMethod.GET, consumes = "application/json", produces = {"application/json","application/xml"})
     @ResponseBody
-    public List<Tweet> tweets_JSON(@RequestParam(value = "search", defaultValue = "", required=false) String search) {
+    public List<Tweet> tweets_XML_JSON(@RequestParam(value = "search", defaultValue = "", required=false) String search) {
         List<Tweet> listTweets = Builder.searchTweets(search);
         return listTweets;
     }
 
-    @RequestMapping(value = "/tweets/{username}", method = RequestMethod.GET, produces = {"application/json","application/xml"})
+    @RequestMapping(value = "/tweets/{username}", method = RequestMethod.GET, consumes = "application/json", produces = {"application/json","application/xml"})
     @ResponseBody
-    public List<Tweet> tweetsUser_JSON(@PathVariable String username, @RequestParam(value = "search", defaultValue = "", required=false) String search) {
-        List<Tweet> listTweets = Builder.searchUserTweets(username, search);
+    public List<Tweet> tweetsUser_XML_JSON(@PathVariable String username, @RequestParam(value = "search", defaultValue = "", required=false) String search) {
+    	List<Tweet> listTweets = Builder.searchUserTweets(username, search);
         return listTweets;
     }
 	
+    
 }

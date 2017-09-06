@@ -185,37 +185,12 @@ public class Builder {
 	}
 
 	public static Map<String, ArrayList<Tweet>> tweetByUsers = new HashMap<String, ArrayList<Tweet>>();
-	
+
 	public static Map<String, ArrayList<UserStatus>> userStatusMap = new HashMap<String, ArrayList<UserStatus>>();
 
 	public static Map<String, String> tweetByUser = new HashMap<String, String>();
 
 	public static Map<String, List<Follow>> followByUser = new HashMap<String, List<Follow>>();
-
-	public static List<Follow> listFollowing() {
-		List<Follow> following = new ArrayList<Follow>();
-		following.add(new Follow("user1", "user2"));
-		following.add(new Follow("user1", "user3"));
-		following.add(new Follow("user1", "user4"));
-		followByUser.put("user1", following);
-		return following;
-
-	}
-
-	public static List<Follow> listFollowers() {
-
-		List<Follow> following = new ArrayList<Follow>();
-		following.add(new Follow("user2", "user1"));
-		following.add(new Follow("user3", "user1"));
-		following.add(new Follow("user4", "user1"));
-		following.add(new Follow("user5", "user1"));
-		followByUser.put("user2", following);
-		followByUser.put("user3", following);
-		followByUser.put("user4", following);
-		followByUser.put("user5", following);
-		return following;
-
-	}
 
 	static {
 		tweetByUsers.put("user1", new ArrayList<Tweet>());
@@ -231,8 +206,11 @@ public class Builder {
 		userStatusMap.put("user2", userStatus);
 		userStatus.add(new UserStatus("user3", false));
 		userStatusMap.put("user3", userStatus);
+		allUserStatus();
+		anUserStatus("user8", true);
+		anUserStatus("user9", false);
 	}
-	
+
 	public static ArrayList<Tweet> tweet;
 
 	public static ArrayList<Tweet> getMessages() {
@@ -248,25 +226,70 @@ public class Builder {
 		tweets.add(newTweet);
 		tweetByUser.put(getUsername(), tweet);
 	}
-	
+
+	@SuppressWarnings("unlikely-arg-type")
 	public static List<Tweet> searchTweets(String search) {
-		List<String> Tweet = new ArrayList<String>();
-		Tweet.add("tweet 1");
-		Tweet.add("tweet 2");
-		
-		return null;
+		ArrayList<Tweet> CloneTweet = new ArrayList<Tweet>();
+		for (int i = 0; i < multipleTweets().size(); i++) {
+			if (multipleTweets().get(i).getTweet().equals(search)) {
+				CloneTweet
+						.add(new Tweet(multipleTweets().get(i).getUser_username(), multipleTweets().get(i).getTweet()));
+				System.out.println("mesaj " + multipleTweets().get(i).getTweet());
+				;
+				System.out.println(search);
+			}
+		}
+		for (int i = 0; i < tweetByUsers.size(); i++) {
+			if (tweetByUsers.get(getMessages()).equals(search)) {
+				// CloneTweet.add(new
+				// Tweet(tweetByUsers.get(getMessages()).toString(),tweetByUsers.get(getUsername())));
+			}
+		}
+		return CloneTweet;
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	public static List<Tweet> searchUserTweets(String username, String search) {
 
-		username = getUsername();
-		Tweet tweet = new Tweet();
-		tweet.setTweet("The cat is on the table");
-		List<String> tweetClone = new ArrayList<String>();
-		if (tweet.getTweet().contains(search)) {
-			tweetClone.add(search);
+		ArrayList<Tweet> CloneTweet = new ArrayList<Tweet>();
+		for (int i = 0; i < multipleTweets().size(); i++) {
+			if (multipleTweets().get(i).getTweet().equals(search)
+					|| multipleTweets().get(i).getUser_username().equals(username)) {
+				CloneTweet
+						.add(new Tweet(multipleTweets().get(i).getUser_username(), multipleTweets().get(i).getTweet()));
+			}
 		}
-		return null;
+//		for (int i = 0; i < tweetByUsers.size(); i++) {
+//			if (tweetByUsers.get(getMessages()).equals(search) || tweetByUsers.get(getUsername()).equals(username)) {
+//				// test
+//			}
+//		}
+
+		return CloneTweet;
+
+	}
+
+	public static List<Follow> listFollowing() {
+		List<Follow> following = new ArrayList<Follow>();
+		following.add(new Follow("user1", "user2"));
+		following.add(new Follow("user1", "user3"));
+		following.add(new Follow("user1", "user4"));
+		followByUser.put("user1", following);
+		return following;
+
+	}
+
+	public static List<Follow> listFollowers() {
+		List<Follow> following = new ArrayList<Follow>();
+		following.add(new Follow("user2", "user1"));
+		following.add(new Follow("user3", "user1"));
+		following.add(new Follow("user4", "user1"));
+		following.add(new Follow("user5", "user1"));
+		followByUser.put("user2", following);
+		followByUser.put("user3", following);
+		followByUser.put("user4", following);
+		followByUser.put("user5", following);
+		return following;
 
 	}
 }

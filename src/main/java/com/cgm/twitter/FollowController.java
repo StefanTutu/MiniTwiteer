@@ -15,11 +15,15 @@ import java.util.Map;
 @Controller
 public class FollowController {
 
-	// FOLLOW USER
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/users/follow", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView followUser(@ModelAttribute("followForm") UserStatus user, Map model) {
+
+		UserStatus userStatus = (UserStatus) model.get("followPage");
+		if(userStatus==null || userStatus.getUsername()== null) {
+//			model.put("listUsers", new UserStatus(user,true));
+		}
 		Follow follow = (Follow) model.get("followPage");
 		if (follow == null || follow.getUser_followed() == null) {
 			model.put("listUsers", new Follow());
@@ -27,10 +31,8 @@ public class FollowController {
 		Builder.follow(user.getUsername());
 
 		return new ModelAndView("followPage", model);
-
 	}
 
-	// UNFOLLOW USER
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/users/unfollow", method = RequestMethod.POST)
 	@ResponseBody
@@ -43,21 +45,19 @@ public class FollowController {
 		return new ModelAndView("followPage", model);
 	}
 
-	// FOLLOW PAGE
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView followPage(ModelAndView model) {
+		public ModelAndView followPage(ModelAndView model) {
 		UserStatus followForm = new UserStatus();
 		UserStatus unfollowForm = new UserStatus();
 		model.addObject("followForm", followForm);
 		model.addObject("unfollowForm", unfollowForm);
-		Map<String, ArrayList<UserStatus>> listUsers = Builder.userStatusMap;
-		model.addObject("listUsers", listUsers);
+		model.addObject("listUsers", Builder.userStatusMap);
 		model.setViewName("follows/followPage");
 		return model;
+	
 	}
 
-	// FOLLOWING PAGE
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/following/formatted", method = RequestMethod.GET)
 	protected @ResponseBody ModelAndView getFollowing() throws Exception {
@@ -66,7 +66,6 @@ public class FollowController {
 		return new ModelAndView("follows/followingPage", model);
 	}
 
-	// FOLLOWERS PAGE
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/followers/formatted", method = RequestMethod.GET)
 	protected @ResponseBody ModelAndView getFollowers() throws Exception {

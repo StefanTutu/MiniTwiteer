@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class TweetController {
 
-	// NEW TWEET PAGE
 	@RequestMapping(value = "/tweet/new", method = RequestMethod.GET)
 	public ModelAndView newTweet(ModelAndView model, HttpServletRequest request) {
 		model.addObject("tweet",Builder.tweetByUsers);
@@ -25,7 +24,6 @@ public class TweetController {
 		return model;
 	}
 
-	// NEW TWEET
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/tweet/create", method = RequestMethod.POST)
 	@ResponseBody
@@ -37,7 +35,6 @@ public class TweetController {
 		return new ModelAndView("redirect:/list_tweets", model);
 	}
 
-	// GET ALL TWEETS
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/tweets/formatted", method = RequestMethod.GET)
 	protected @ResponseBody ModelAndView gettweet(HttpServletRequest request) throws Exception {
@@ -46,25 +43,12 @@ public class TweetController {
 		model.put("tweet",Builder.tweetByUsers);
 		return new ModelAndView("tweets/tweetsPage", model);
 	}
-
-/*	//readmessages
-	@RequestMapping(value = "/readmessage", method = RequestMethod.GET)
-	public @ResponseBody ModelAndView getTweet(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("tweetsPage");
-		model.addObject("messageList",
-				Builder.tweetByUsers.get(request.getSession().getAttribute("username").toString()));
-		return model;
-	}
-*/
 	
-	
-	// GET TWEETS OF A USER
 	@RequestMapping(value = "/tweets/{username}/formatted", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView tweetsUser(ModelAndView model, @PathVariable String username,
 			@RequestParam(value = "search", defaultValue = "", required = false) String search,
 			HttpServletRequest request, HttpServletResponse response) {
-
 		List<Tweet> listTweets = Builder.searchUserTweets(username, search);
 		model.addObject("listTweets", listTweets);
 		model.addObject("username", username);

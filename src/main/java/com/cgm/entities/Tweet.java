@@ -16,6 +16,11 @@ public class Tweet implements Serializable{
 		this.tweet = tweet;
 		this.user_username = user_username;
 	}
+	
+	public Tweet(String tweet, String user_username) {
+		this.tweet = tweet;
+		this.user_username = user_username;
+	}
 
 	public int getId() {
 		return id;
