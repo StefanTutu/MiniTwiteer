@@ -19,9 +19,8 @@ public class TweetController {
 
 	// NEW TWEET PAGE
 	@RequestMapping(value = "/tweet/new", method = RequestMethod.GET)
-	public ModelAndView newTweet(ModelAndView model) {
-		Tweet newTweet = new Tweet();
-		model.addObject("tweet", newTweet);
+	public ModelAndView newTweet(ModelAndView model, HttpServletRequest request) {
+		model.addObject("tweet",Builder.tweetByUsers);
 		model.setViewName("tweets/newTweetPage");
 		return model;
 	}
@@ -41,12 +40,24 @@ public class TweetController {
 	// GET ALL TWEETS
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/tweets/formatted", method = RequestMethod.GET)
-	protected @ResponseBody ModelAndView getArtists() throws Exception {
+	protected @ResponseBody ModelAndView gettweet(HttpServletRequest request) throws Exception {
 		Map model = new HashMap();
 		model.put("tweets", Builder.multipleTweets());
+		model.put("tweet",Builder.tweetByUsers);
 		return new ModelAndView("tweets/tweetsPage", model);
 	}
 
+/*	//readmessages
+	@RequestMapping(value = "/readmessage", method = RequestMethod.GET)
+	public @ResponseBody ModelAndView getTweet(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("tweetsPage");
+		model.addObject("messageList",
+				Builder.tweetByUsers.get(request.getSession().getAttribute("username").toString()));
+		return model;
+	}
+*/
+	
+	
 	// GET TWEETS OF A USER
 	@RequestMapping(value = "/tweets/{username}/formatted", method = RequestMethod.GET)
 	@ResponseBody
@@ -54,23 +65,11 @@ public class TweetController {
 			@RequestParam(value = "search", defaultValue = "", required = false) String search,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		List<String> listTweets = Builder.searchUserTweets(username, search);
+		List<Tweet> listTweets = Builder.searchUserTweets(username, search);
 		model.addObject("listTweets", listTweets);
 		model.addObject("username", username);
 		model.addObject("search", search);
 		model.setViewName("tweets/tweetsPage");
 		return model;
 	}
-
-//	@SuppressWarnings({ "unchecked", "rawtypes" })
-//	@RequestMapping(value = "/addTweet", method = RequestMethod.POST)
-//	public ModelAndView createTweet(HttpServletRequest req, @ModelAttribute("message") String message)
-//			throws Exception {
-//		Map model = new HashMap();
-//		// Builder.addTweet(message);
-//		model.put("tweetByUser", Builder.tweetByUser);
-//		return new ModelAndView("tweets/newTweetPage", model);
-//	}
-	
-
 }

@@ -8,8 +8,8 @@ import com.cgm.builder.Builder;
 import com.cgm.entities.Follow;
 import com.cgm.entities.UserStatus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -22,7 +22,7 @@ public class FollowController {
 	public ModelAndView followUser(@ModelAttribute("followForm") UserStatus user, Map model) {
 		Follow follow = (Follow) model.get("followPage");
 		if (follow == null || follow.getUser_followed() == null) {
-			model.put("followPage", new Follow());
+			model.put("listUsers", new Follow());
 		}
 		Builder.follow(user.getUsername());
 
@@ -38,9 +38,23 @@ public class FollowController {
 		Builder.unfollow(user.getUsername());
 		Follow follow = (Follow) model.get("follow");
 		if (follow == null || follow.getUser_followed() == null) {
-			model.put("followPage", new Follow());
+			model.put("listUsers", new Follow());
 		}
 		return new ModelAndView("followPage", model);
+	}
+
+	// FOLLOW PAGE
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView followPage(ModelAndView model) {
+		UserStatus followForm = new UserStatus();
+		UserStatus unfollowForm = new UserStatus();
+		model.addObject("followForm", followForm);
+		model.addObject("unfollowForm", unfollowForm);
+		Map<String, ArrayList<UserStatus>> listUsers = Builder.userStatusMap;
+		model.addObject("listUsers", listUsers);
+		model.setViewName("follows/followPage");
+		return model;
 	}
 
 	// FOLLOWING PAGE

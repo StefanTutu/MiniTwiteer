@@ -6,6 +6,26 @@
 <head>
 <title>Twitter :: Tweets</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$('#search_form')
+			.submit(
+					function(e) {
+						// Stop from submitting
+						e.preventDefault();
+
+						var username = $('#username').val();
+						var search = $('#search').val();
+
+						if (username == "") {
+							window.location = "${pageContext.request.contextPath}/tweets/formatted?search="
+									+ search;
+						} else {
+							window.location = "${pageContext.request.contextPath}/tweets/"
+									+ username + "/formatted?search=" + search;
+						}
+					});
+</script>
 </head>
 <body style="margin: 0px;">
 	<jsp:include page="../_menu.jsp" />
@@ -14,7 +34,7 @@
 
 		<c:choose>
 			<c:when test="${not empty username}">
-				<h1 style="color: grey;">${username}Tweets</h1>
+				<h1 style="color: grey;">${username} Tweets</h1>
 			</c:when>
 
 			<c:otherwise>
@@ -40,22 +60,17 @@
 			</div>
 		</c:forEach>
 
-
-		<script type="text/javascript">
-    $('#search_form').submit(function (e) {
-      // Stop from submitting
-      e.preventDefault();
-
-      var username = $('#username').val();
-      var search = $('#search').val();
-
-      if(username == ""){
-          window.location = "${pageContext.request.contextPath}/tweets/formatted?search=" + search;
-      }
-      else {
-          window.location = "${pageContext.request.contextPath}/tweets/" + username + "/formatted?search=" + search;
-      }
-    });
-  </script>
+		<div class="content-holder">
+			<div class="padding_container"><h4>New Message:</h4></div>
+			<c:forEach items="${tweet}" var="map">
+				<c:forEach items="${map.value}" var="message">
+					<div class="list_items">
+						<p>
+							<b>${message.user_username}:</b> ${message.tweet}
+					</div>
+				</c:forEach>
+			</c:forEach>
+		</div>
+	</div>
 </body>
 </html>

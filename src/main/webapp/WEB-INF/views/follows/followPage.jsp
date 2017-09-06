@@ -19,7 +19,7 @@
 
     <br/>
 
-    <c:forEach var="user" items="${listUsers}" varStatus="status">
+    <c:forEach var="user" items="${userStatusMap}" varStatus="status">
       <p>
         <c:choose>
           <c:when test="${user.status == false}">

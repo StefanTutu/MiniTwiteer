@@ -120,32 +120,6 @@ public class Builder {
 		return userStatus;
 	}
 
-	public static List<String> searchTweets(String search) {
-		List<String> Tweet = new ArrayList<String>();
-		Tweet.add("tweet 1");
-		Tweet.add("tweet 2");
-		List<String> tweetClone = new ArrayList<String>();
-		for (String tweetSearch : Tweet) {
-			if (tweetSearch.equals(search)) {
-				tweetClone.add(tweetSearch);
-			}
-		}
-		return tweetClone;
-	}
-
-	public static List<String> searchUserTweets(String username, String search) {
-
-		username = getUsername();
-		Tweet tweet = new Tweet();
-		tweet.setTweet("The cat is on the table");
-		List<String> tweetClone = new ArrayList<String>();
-		if (tweet.getTweet().contains(search)) {
-			tweetClone.add(search);
-		}
-		return tweetClone;
-
-	}
-
 	public static String getUsername() {
 		String username;
 		Account account = new Account();
@@ -210,9 +184,9 @@ public class Builder {
 		return tweetss;
 	}
 
-	public static Map<String, List<Tweet>> tweetByUsers = new HashMap<String, List<Tweet>>();
+	public static Map<String, ArrayList<Tweet>> tweetByUsers = new HashMap<String, ArrayList<Tweet>>();
 	
-	
+	public static Map<String, ArrayList<UserStatus>> userStatusMap = new HashMap<String, ArrayList<UserStatus>>();
 
 	public static Map<String, String> tweetByUser = new HashMap<String, String>();
 
@@ -247,6 +221,16 @@ public class Builder {
 		tweetByUsers.put("user1", new ArrayList<Tweet>());
 		tweetByUsers.put("user2", new ArrayList<Tweet>());
 		tweetByUsers.put("user3", new ArrayList<Tweet>());
+		tweetByUsers.put("user3", new ArrayList<Tweet>());
+		tweetByUsers.put("user3", new ArrayList<Tweet>());
+		userStatusMap.put("user1", new ArrayList<UserStatus>());
+		ArrayList<UserStatus> userStatus = new ArrayList<UserStatus>();
+		userStatus.add(new UserStatus("user1", true));
+		userStatusMap.put("user1", userStatus);
+		userStatus.add(new UserStatus("user2", false));
+		userStatusMap.put("user2", userStatus);
+		userStatus.add(new UserStatus("user3", false));
+		userStatusMap.put("user3", userStatus);
 	}
 	
 	public static ArrayList<Tweet> tweet;
@@ -263,5 +247,26 @@ public class Builder {
 		newTweet.setUser_username(getUsername());
 		tweets.add(newTweet);
 		tweetByUser.put(getUsername(), tweet);
+	}
+	
+	public static List<Tweet> searchTweets(String search) {
+		List<String> Tweet = new ArrayList<String>();
+		Tweet.add("tweet 1");
+		Tweet.add("tweet 2");
+		
+		return null;
+	}
+
+	public static List<Tweet> searchUserTweets(String username, String search) {
+
+		username = getUsername();
+		Tweet tweet = new Tweet();
+		tweet.setTweet("The cat is on the table");
+		List<String> tweetClone = new ArrayList<String>();
+		if (tweet.getTweet().contains(search)) {
+			tweetClone.add(search);
+		}
+		return null;
+
 	}
 }

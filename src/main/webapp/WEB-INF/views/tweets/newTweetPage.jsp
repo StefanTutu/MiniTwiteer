@@ -8,7 +8,7 @@
 <script>
     function functionTweet(){
     	var content = document.getElementById("tweet").value;
-    	 var user = "<%=session.getAttribute("username")%>";
+    	var user = "<%=session.getAttribute("username")%>";
 		var Data = {
 			"id" : 1,
 			"tweet" : content,
@@ -34,25 +34,7 @@
 		});
 	};
 </script>
-<script type="text/javascript">
-  
- $.ajax({
-        type: "GET",
-        url: "http://localhost:8080/twitter/mesaj/message",
-        
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(data){
-         $("#newMessage").append("<p>" + data.tweet + "</p>");
-         console.log(data);
-         },
-        failure: function(errMsg) {
-            alert(errMsg);
-        }
-    });
- 
 
-</script>
 </head>
 <body style="margin: 0px;">
 	<jsp:include page="../_menu.jsp" />
@@ -75,6 +57,17 @@
 					style="margin-left: 10px;" onClick="functionTweet()"></td>
 			</tr>
 		</table>
+	</div>
+
+	<div class="container">
+		<c:forEach items="${tweet}" var="map">
+			<c:forEach items="${map.value}" var="message">
+				<div class="list_items">
+					<p>
+						<b>${message.user_username}:</b> ${message.tweet}
+				</div>
+			</c:forEach>
+		</c:forEach>
 	</div>
 
 	<div id="newMessage"></div>

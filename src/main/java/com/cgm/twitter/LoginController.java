@@ -54,7 +54,6 @@ public class LoginController {
 	public String login(@ModelAttribute(value = "account") Account account, ModelMap modelMap, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 		AccountModel accModel = new AccountModel();
-		// modelMap.put("account", new Account());
 		if (accModel.login(account.getUsername(), account.getPassword())) {
 			session.setAttribute("username", account.getUsername());
 			if (request.getParameter("remember") != null) {
@@ -74,9 +73,7 @@ public class LoginController {
 
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-		// Remove session
 		session.removeAttribute("username");
-		// Remove cookies
 		for (Cookie ck : request.getCookies()) {
 			if (ck.getName().equalsIgnoreCase("username")) {
 				ck.setMaxAge(0);
